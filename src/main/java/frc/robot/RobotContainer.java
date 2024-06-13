@@ -30,7 +30,8 @@ public class RobotContainer {
   private static final CommandXboxController m_driverController =
       new CommandXboxController(0);
   private static final Trigger drive = m_driverController.leftBumper();
-    private static final Trigger angle = m_driverController.rightBumper();
+  private static final Trigger angle = m_driverController.rightBumper();
+  private static final Trigger button_A = m_driverController.a();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -54,6 +55,9 @@ public class RobotContainer {
     m_exampleSubsystem.setDefaultCommand(m_exampleSubsystem.driveCommandu(()->MathUtil.applyDeadband(m_driverController.getLeftY(),.05), ()-> MathUtil.applyDeadband(m_driverController.getLeftX(),.15), ()-> m_driverController.getRightX()));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     drive.onTrue(new InstantCommand(()-> m_exampleSubsystem.zeroGyro()));
+    button_A.onTrue(m_exampleSubsystem.autoAlign());
+    button_A.onFalse(m_exampleSubsystem.driveCommandu(()->0, ()->0, ()->0));
+    
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
