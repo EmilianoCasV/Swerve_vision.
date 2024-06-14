@@ -32,6 +32,7 @@ public class RobotContainer {
   private static final Trigger drive = m_driverController.leftBumper();
   private static final Trigger angle = m_driverController.rightBumper();
   private static final Trigger button_A = m_driverController.a();
+  private static final Trigger button_b = m_driverController.b();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,6 +58,8 @@ public class RobotContainer {
     drive.onTrue(new InstantCommand(()-> m_exampleSubsystem.zeroGyro()));
     button_A.onTrue(m_exampleSubsystem.autoAlign());
     button_A.onFalse(m_exampleSubsystem.driveCommandu(()->0, ()->0, ()->0));
+    button_b.onTrue(m_exampleSubsystem.autoRange());
+    button_b.onFalse(m_exampleSubsystem.driveCommandu(()->0,()->0,()->0));
     
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

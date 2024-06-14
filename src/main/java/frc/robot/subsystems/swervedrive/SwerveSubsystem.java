@@ -49,6 +49,7 @@ public class SwerveSubsystem extends SubsystemBase
   public        double      maximumSpeed = Units.feetToMeters(15.68);
 
   private final PIDController controller = new PIDController(1, 0, 0);
+  private final PIDController controller_range = new PIDController(1,0, 0);
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -474,4 +475,16 @@ public class SwerveSubsystem extends SubsystemBase
   
     return this.driveCommandu(()->0, ()->0, ()-> controller.calculate(Units.degreesToRadians(LimelightHelpers.getTX("limelight")), 0.0));
   }
+
+  public Command autoRange(){
+    return this.driveCommandu(()->0,()-> controller_range.calculate(Units.degreesToRadians(LimelightHelpers.getTX("limelight")), 0.0), ()->0);
+  }
+  /*  This is a experiment 
+  public Command rangeTest(){
+    double Kp = 0.1;
+    double targetingFowardSpeed = LimelightHelpers.getTY("limelight")*Kp;
+    targetingFowardSpeed *= -1;
+    return this.driveCommandu(()->targetingFowardSpeed,()->targetingFowardSpeed, ()-> 0);
+  }
+   */
 }
